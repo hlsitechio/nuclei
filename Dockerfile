@@ -1,5 +1,8 @@
 FROM projectdiscovery/nuclei:latest
 
+# Clear the entrypoint from base image
+ENTRYPOINT []
+
 # Install Python for API wrapper
 USER root
 RUN apk add --no-cache python3 py3-pip curl
