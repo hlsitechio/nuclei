@@ -1,7 +1,7 @@
 FROM alpine:3.19
 
 # Install nuclei from official releases
-RUN apk add --no-cache wget python3 py3-pip curl bash
+RUN apk add --no-cache wget unzip python3 py3-pip curl bash
 RUN wget -q https://github.com/projectdiscovery/nuclei/releases/download/v3.3.7/nuclei_3.3.7_linux_amd64.zip && \
     unzip nuclei_3.3.7_linux_amd64.zip && \
     mv nuclei /usr/local/bin/ && \
