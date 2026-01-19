@@ -22,8 +22,9 @@ def scan():
     if not target:
         return jsonify({'error': 'target required'}), 400
 
-    # Build command
-    cmd = ['nuclei', '-u', target, '-json-export', '/tmp/results.json', '-silent']
+    # Build command with rate limiting to prevent thread explosion
+    cmd = ['nuclei', '-u', target, '-json-export', '/tmp/results.json', '-silent',
+           '-rate-limit', '100', '-c', '25', '-bs', '25']  # Limit concurrency
 
     if templates:
         cmd.extend(['-t', templates])
@@ -122,7 +123,8 @@ def cve_scan():
         'nuclei', '-u', target,
         '-t', 'cves/',
         '-json-export', '/tmp/results.json',
-        '-silent'
+        '-silent',
+        '-rate-limit', '100', '-c', '25', '-bs', '25'
     ]
 
     if year:
@@ -164,7 +166,8 @@ def tech_scan():
         'nuclei', '-u', target,
         '-t', 'technologies/',
         '-json-export', '/tmp/results.json',
-        '-silent'
+        '-silent',
+        '-rate-limit', '100', '-c', '25', '-bs', '25'
     ]
 
     try:
@@ -206,7 +209,8 @@ def exposure_scan():
         '-t', 'exposures/',
         '-t', 'exposed-panels/',
         '-json-export', '/tmp/results.json',
-        '-silent'
+        '-silent',
+        '-rate-limit', '100', '-c', '25', '-bs', '25'
     ]
 
     try:
@@ -246,7 +250,8 @@ def misconfig_scan():
         '-t', 'misconfiguration/',
         '-t', 'miscellaneous/',
         '-json-export', '/tmp/results.json',
-        '-silent'
+        '-silent',
+        '-rate-limit', '100', '-c', '25', '-bs', '25'
     ]
 
     try:
